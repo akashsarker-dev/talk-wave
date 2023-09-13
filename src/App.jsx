@@ -1,12 +1,14 @@
-import './App.css'
-import Registration from './pages/Login/Registration';
+import React from 'react'
+import Registration from './pages/registration/Registration'
+import Login from './pages/Login/Login'
 
-function App() {
-
+const App = () => {
   return (
-    <>
-    <Registration></Registration>
-    </>
+    <div>
+      {/* <Registration></Registration> */}
+      <Login></Login>
+
+    </div>
   )
 }
 

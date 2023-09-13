@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import LoginImage from '../../Images/input-field.png'
+import LoginImage from '/input-field.png'
 
 const Registration = () => {
   const [email, setEmail] = useState('');
