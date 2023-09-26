@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 import LoginImage from '/login-field.png'
 import {FcGoogle} from 'react-icons/fc'
 import {AiOutlineEyeInvisible,AiOutlineEye} from 'react-icons/ai'
+import { Link, Navigate } from 'react-router-dom'
+import { getAuth, signInWithEmailAndPassword ,GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+import { ToastContainer, toast } from 'react-toastify'
 
 const Login = () => {
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
   const [emailError, setEmailError] = useState('');
@@ -24,13 +28,23 @@ const Login = () => {
     }
   };
   
-  const handleName =(e)=>{
-    setName(e.target.value);
-    setNameError('')
-  }
+  
   const handlePassword =(e)=>{
     setPassword(e.target.value);
     setPasswordError('')
+  }
+  const handleGoogle =()=>{
+    signInWithPopup(auth, provider)
+  .then(() => {
+    setTimeout(() => {
+      Navigate('/')
+    }, 3000);
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    // ...
+  });
+
   }
   const handleSubmit = ()=>{
     if(!email){
@@ -38,14 +52,37 @@ const Login = () => {
     }
     if(!password){
       setPasswordError('Please Enter You Password');
+    }if(email || password){
+      signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        toast.success('login Success');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        
+    if(errorCode.includes('auth/invalid-login-credentials'))
+      setPasswordError('email & password not match');
+      });
     }
   }
   return (
     <>
     <div className='flex'>
+    <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          />
       <div className='w-1/2 mt-[100px] ml-[147px]'>
         <h2 className='text-[#11175D] text-[34px] font-bold font-opensans mb-7'>Login to your account!</h2>
-        <button className='font-opensans text-[#03014C] text-sm font-semibold mb-8 flex items-center py-[23px] pl-[29px] pr-[42px] border-[1px] border-[rgba(3,1,76,0.32)] rounded-lg'><FcGoogle className='mr-[9px]'></FcGoogle>Login with Google</button>
+        <button onClick={handleGoogle} className='font-opensans text-[#03014C] text-sm font-semibold mb-8 flex items-center py-[23px] pl-[29px] pr-[42px] border-[1px] border-[rgba(3,1,76,0.32)] rounded-lg'><FcGoogle className='mr-[9px]'></FcGoogle>Login with Google</button>
         <div>
         <div class="relative">
           <input onChange={handleEmail} type="email" id="email-field" class="font-nunito pt-[26px]   border-b-2  bg-transparent text-xl font-semibold border-1 border-[rgba(17,23,93,0.3)] w-[368px] focus:outline-none peer  " placeholder=" " />
@@ -75,8 +112,12 @@ const Login = () => {
             <p className='text-[red]'>{passwordError}</p>
           }
         </div >
-        <button onClick={handleSubmit} className='bg-primary-color rounded-lg py-[26px] w-[368px] text-white mb-11 mt-14   text-xl font-semibold nunito cursor-pointer'>Login to Continue</button>
-        <p className='text-[#03014C] w-[368px]  text-sm font-normal font-["opensans"]' >Don’t have an account ?<span className='text-[#EA6C00] font-bold'>   Sign Up</span></p>
+        <button onClick={handleSubmit} className='bg-primary-color rounded-lg py-[26px] w-[368px] text-white mb-5 mt-14   text-xl font-semibold nunito cursor-pointer'>Login to Continue</button>
+        <p className='text-[#03014C] w-[368px] text-center  text-sm font-normal font-["opensans"]' >Don’t have an account ?<Link to='/registration' className='text-[#EA6C00] font-bold'>   Sign Up</Link></p>
+        
+        <Link to='/resetpassword' className='text-red-500 flex justify-center font-extrabold w-[368px]  text-sm  font-["opensans"]' >Reset password?</Link>
+
+        
       </div>
 
       <div className='w-1/2'>
