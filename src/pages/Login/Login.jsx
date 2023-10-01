@@ -40,9 +40,7 @@ const Login = () => {
       Navigate('/')
     }, 3000);
   }).catch((error) => {
-    // Handle Errors here.
     const errorCode = error.code;
-    // ...
   });
 
   }
@@ -52,10 +50,16 @@ const Login = () => {
     }
     if(!password){
       setPasswordError('Please Enter You Password');
-    }if(email || password){
+    }
+    if(email || password){
       signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        toast.success('login Success');
+        if (auth.currentUser.emailVerified) {
+          
+          toast.success('login Success');
+        }else{
+          alert('please verify you email')
+        }
       })
       .catch((error) => {
         const errorCode = error.code;

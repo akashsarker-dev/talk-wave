@@ -8,7 +8,12 @@ import {AiOutlineEyeInvisible,AiOutlineEye} from 'react-icons/ai'
 import { useNavigate } from "react-router-dom";
 
 
+
 const Registration = () => {
+    document.title = 'Home Page';
+    const favicon = document.querySelector("link[rel*='icon']");
+    favicon.href = '/favicon-home.ico';
+
   const auth = getAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -54,7 +59,7 @@ const Registration = () => {
     }
     if(name && email && password && /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
     createUserWithEmailAndPassword(auth, email, password).then(()=>{
-    console.log("done");
+    
     sendEmailVerification(auth.currentUser)
     .then(() => {
       toast.success('please verify you email');
