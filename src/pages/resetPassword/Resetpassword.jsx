@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const Resetpassword = () => {
-
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const[email, setEmail]= useState('')
   const handleResetPassword = ()=>{
+
     const auth = getAuth();
-sendPasswordResetEmail(auth, email)
+    sendPasswordResetEmail(auth, email)
       .then(() => {
-        // Password reset email sent!
-        // ..
+
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ..
-      });
+      });   
+
   }
   return (
     <div className='w-full h-screen bg-blue-600 flex justify-center flex-col items-center'>
@@ -28,7 +30,7 @@ sendPasswordResetEmail(auth, email)
         </div>
         <div className="flex flex-col gap-4 p-6">
         <div class="relative">
-          <input   type="email" id="full-name" class="font-nunito text-sm w-full py-3  text-[20px] font-semibold  border-2 rounded-lg  bg-transparent  border-1 border-[rgba(17,23,93,0.3)]  focus:outline-none peer " placeholder=" " />
+          <input onChange={(e)=> setEmail(e.target.value)}  type="email" id="full-name" class="font-nunito text-sm w-full py-3  text-[20px] font-semibold  border-2 rounded-lg  bg-transparent  border-1 border-[rgba(17,23,93,0.3)]  focus:outline-none peer " placeholder=" " />
 
           <label for="full-name" class="font-nunito absolute text-[16px] font-semibold text-[#11175D]   peer-focus:scale-75 peer-placeholder-shown:scale-100 scale-75 duration-300 transform -translate-y-3 bg-white px-2 peer-focus:px-2 peer-focus:text-[rgba(17,23,93,0.7)]    peer-placeholder-shown:top-1/2 peer-focus:top-0 peer-focus:-translate-y-3  left-5">Email</label>
 

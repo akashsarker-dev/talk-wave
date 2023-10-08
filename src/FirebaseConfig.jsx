@@ -1,18 +1,21 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDKl_ryHqZzrKPsDVnOF-wt9ZmTg93mtMU",
-  authDomain: "talk-wave-d71ec.firebaseapp.com",
-  projectId: "talk-wave-d71ec",
-  storageBucket: "talk-wave-d71ec.appspot.com",
-  messagingSenderId: "515215408161",
-  appId: "1:515215408161:web:15429b777e37214af83760"
+  apiKey: "AIzaSyCmQFbM-EqvRT9kuzTos8z5qDkVqvjMV8Y",
+  authDomain: "talk-wave2023.firebaseapp.com",
+  projectId: "talk-wave2023",
+  storageBucket: "talk-wave2023.appspot.com",
+  messagingSenderId: "455173202462",
+  appId: "1:455173202462:web:e42427e5f9f57a87b9c40f",
+  measurementId: "G-F80Z6J88KS"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export default firebaseConfig
+const analytics = getAnalytics(app);
