@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
-import Sidebar from '../sidebar/Sidebar'
-import { useSelector} from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate()
@@ -14,7 +13,7 @@ const Home = () => {
   })
   return (
     <div>
-        <Sidebar></Sidebar>
+      <h1>Home Page</h1>
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { Link, Navigate,useNavigate} from 'react-router-dom'
 import { getAuth, signInWithEmailAndPassword ,GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from 'react-redux'
-import { userLoginInfo } from '../../slices/userSlices'
+import { userLoginInfo } from '../../slices/userSlice'
 
 const Login = () => {
 
@@ -33,8 +33,7 @@ const Login = () => {
       setEmailError('Please enter a valid email address');
     }
   };
-  
-  
+
   const handlePassword =(e)=>{
     setPassword(e.target.value);
     setPasswordError('')
@@ -64,7 +63,7 @@ const Login = () => {
         console.log(user.user);
         toast.success('Login Success');
         dispatch(userLoginInfo(user.user));
-        // localStorage.setItem(JSON.stringify(userLoginInfo(user)))
+        localStorage.setItem('userLoginInfo', JSON.stringify(userLoginInfo(user)))
         setTimeout(() => {
           navigate('/')
         }, 3000);
