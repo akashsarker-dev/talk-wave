@@ -40,9 +40,9 @@ const Login = () => {
   }
   const handleGoogle =()=>{
     signInWithPopup(auth, provider)
-  .then(() => {
+  .then((user) => {
+    console.log(user);
     setTimeout(() => {
-      
       navigate('/')
     }, 3000);
   }).catch((error) => {
@@ -63,7 +63,7 @@ const Login = () => {
         console.log(user.user);
         toast.success('Login Success');
         dispatch(userLoginInfo(user.user));
-        localStorage.setItem('userLoginInfo', JSON.stringify(userLoginInfo(user)))
+        localStorage.setItem('userLoginInfo', JSON.stringify(userLoginInfo(user)));
         setTimeout(() => {
           navigate('/')
         }, 3000);
@@ -71,8 +71,8 @@ const Login = () => {
       .catch((error) => {
         const errorCode = error.code;
         
-    // if(errorCode.includes('auth/invalid-login-credentials'))
-    //   setPasswordError('email & password not match');
+    if(errorCode.includes('auth/invalid-login-credentials'))
+      setPasswordError('email & password not match');
       });
     }
   }
@@ -123,7 +123,7 @@ const Login = () => {
             <p className='text-[red]'>{passwordError}</p>
           }
         </div >
-        <button type="submit" onClick={handleSubmit} className='bg-primary-color rounded-lg py-[26px] w-[368px] text-white mb-5 mt-14   text-xl font-semibold nunito cursor-pointer'>Login to Continue</button>
+        <button onClick={handleSubmit} className='bg-primary-color rounded-lg py-[26px] w-[368px] text-white mb-5 mt-14   text-xl font-semibold nunito cursor-pointer'>Login to Continue</button>
         <p className='text-[#03014C] w-[368px] text-center  text-sm font-normal font-["opensans"]' >Don’t have an account ?<Link to='/registration' className='text-[#EA6C00] font-bold'>   Sign Up</Link></p>
         <Link to='/resetpassword' className='text-red-500 flex justify-center font-extrabold w-[368px]  text-sm  font-["opensans"]' >Reset password?</Link>
 

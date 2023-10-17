@@ -1,14 +1,34 @@
 import React from 'react'
 import { useState } from 'react'
 import ProfilePic from '../../../public/images/profile.png'
+import { getAuth, signOut } from "firebase/auth";
 
 import {FaXmark} from 'react-icons/fa6'
 import {AiOutlineHome, AiFillMessage, AiOutlineSetting} from 'react-icons/ai'
 import {IoIosNotifications} from 'react-icons/io'
 import {IoLogOutOutline} from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userLoginInfo } from '../../slices/userSlice';
 
 const Sidebar = () => {
     const [open ,setOpen] = useState(true)
+    const navigate = useNavigate()
+    const auth = getAuth();
+    const dispatch = useDispatch()
+
+    const handleSingout = () =>{
+        console.log('jsjdsd');
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            dispatch(userLoginInfo(null))
+            localStorage.removeItem('userLoginInfo')
+        navigate('/login')
+        }).catch((error) => {
+            console.log(error);
+    });
+    }
+    
   return (
     <div>
  
@@ -28,6 +48,7 @@ const Sidebar = () => {
             <ul class="flex flex-col text-5xl mt-[98px] cursor-pointer text-[rgba(255,255,255,0.7)] items-center gap-20">
                 <li>
                     <AiOutlineHome></AiOutlineHome>
+
                 </li>
                 <li>
                     <AiFillMessage></AiFillMessage>
@@ -39,7 +60,7 @@ const Sidebar = () => {
                     <AiOutlineSetting></AiOutlineSetting>
                 </li>
                 <li>
-                    <IoLogOutOutline></IoLogOutOutline>
+                    <IoLogOutOutline onClick={handleSingout}></IoLogOutOutline>
                 </li>
             </ul>
         </div>
