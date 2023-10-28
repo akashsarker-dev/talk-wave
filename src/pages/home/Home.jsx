@@ -1,18 +1,31 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Search from '../../components/search/Search';
-
+import { onAuthStateChanged } from 'firebase/auth';
+import { getAuth,} from "firebase/auth";
+import { userLoginInfo } from '../../slices/userSlice';
 const Home = () => {
-  const navigate = useNavigate()
+  
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const data = useSelector(state => state.userLoginInfo.userInfo);
-  console.log(data);
-  useEffect(()=>{
-    if(!data){
-      navigate('/login')
+  useEffect(() => {
+    if (!data) {
+      navigate('/login');
+      setLoading(false);
+    } else {
+      onAuthStateChanged(auth, (user) => {
+        (user.emailVerified && setVerify(true)) || setLoading(false);
+        
+          dispatch(userLoginInfo(user));
+          localStorage.setItem("userLoginInfo", JSON.stringify(user));
+      });
     }
-  })
+  }, [auth, data, dispatch, navigate]);
   return (
     <div className='flex'>
       
