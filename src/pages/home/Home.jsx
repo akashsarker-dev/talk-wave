@@ -6,6 +6,12 @@ import Search from '../../components/search/Search';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getAuth,} from "firebase/auth";
 import { userLoginInfo } from '../../slices/userSlice';
+import Group from '../../components/group/Group';
+import Friend from '../../components/friend/Friend';
+import User from '../../components/user/User';
+import Friendrequest from '../../components/friendrequest/Friendrequest';
+import Block from '../../components/block/Block';
+import MyGroup from '../../components/mygroup/mygroup';
 const Home = () => {
   
   const auth = getAuth();
@@ -30,12 +36,16 @@ const Home = () => {
     <div className='flex'>
       
      <div><Sidebar></Sidebar></div>
-     <div className='flex flex-wrap sm:ml-[186px] mt-2'>
-     <div className='w-[427px] h-10 '>
+     <div className='flex flex-wrap sm:ml-[186px] mt-2 gap-x-3'>
+     <div>
       <Search></Search>
+      <Group></Group>
      </div>
-      <div className='w-[427px] bg-red-400 h-10'></div>
-      <div className='w-[427px] bg-slate-400 h-10'></div>
+      <div><Friend></Friend></div>
+      <div><User></User></div>
+      <div><Friendrequest></Friendrequest></div>
+      <div><MyGroup></MyGroup></div>
+      <div><Block></Block></div>
      </div>
     </div>
   )

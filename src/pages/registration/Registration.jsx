@@ -12,12 +12,16 @@ import { Link } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import ProfilePic from "../../../public/images/profile.png";
+import { getDatabase, ref, set } from "firebase/database";
 
 
 const Registration = () => {
   document.title = "Home Page";
   const favicon = document.querySelector("link[rel*='icon']");
   favicon.href = "/favicon-home.ico";
+
+
+  const db = getDatabase();
 
   const auth = getAuth();
   const navigate = useNavigate();
@@ -64,17 +68,15 @@ const Registration = () => {
     if (!password) {
       setPasswordError("Please Enter You Password");
     }
-    if (
-      name &&
-      email &&
-      password &&
-      /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-    )
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
+    if (name && email && password && /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/){
+
+      createUserWithEmailAndPassword(auth, email, password, name)
+        .then((user) => {
           updateProfile(auth.currentUser, {
+            displayName: name,
             photoURL : '../../../public/images/profile.png'
-          }).then(() => {
+          })
+          .then(() => {
             toast.success("please verify you email");
             setEmail("");
             setName("");
@@ -82,12 +84,19 @@ const Registration = () => {
             setTimeout(() => {
               navigate("/login");
             }, 2000);
-          });
+          }).then(()=>{
+            set(ref(db, 'users/' + user.user.uid), {
+              username: user.user.displayName,
+              email: user.user.email,
+            })
+          })
         })
+        
         .catch((error) => {
           if (error.code.includes("auth/email-already-in-use"))
             setEmailError("this email is already use");
         });
+    }
   };
   return (
     <>

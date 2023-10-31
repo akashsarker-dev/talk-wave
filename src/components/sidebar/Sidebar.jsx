@@ -14,6 +14,7 @@ import { userLoginInfo } from "../../slices/userSlice";
 import "cropperjs/dist/cropper.css";
 import Cropper from "react-cropper";
 import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
+import { data } from "autoprefixer";
 
 
 const Sidebar = () => {
@@ -114,16 +115,16 @@ const Sidebar = () => {
               <div
                 onClick={handleProfileUpload}
                 className="absolute w-full h-full top-0 left-0 flex justify-center items-center rounded-full opacity-0 group-hover:opacity-100 group-hover:bg-[rgba(0,0,0,0.41)]"
-              >
+                >
                 <BiSolidCloudUpload className="text-2xl text-white"></BiSolidCloudUpload>
               </div>
             </div>
-
             <FaXmark
               onClick={() => setOpen(!open)}
               class="w-5 h-5  pointer sm:hidden block"
             ></FaXmark>
           </div>
+          <h3 className="text-center text-[rgba(255,255,255,0.7)] text-2xl font-bold font-nunito">{dataInfo?.displayName}</h3>
           <ul class="flex flex-col text-5xl mt-[98px] cursor-pointer text-[rgba(255,255,255,0.7)] items-center gap-20">
             <li>
               <AiOutlineHome></AiOutlineHome>
@@ -148,13 +149,13 @@ const Sidebar = () => {
                   Upload You Image
                 </h2>
 
-                <div className="group relative rounded-full mx-auto w-16 h-16 overflow-hidden">
+                <div className="group relative rounded-full mx-auto w-28 h-28 overflow-hidden">
                   {image ? (
                     <div className="img-preview w-full h-full rounded-full " />
                   ) : (
                     <img
-                      src={dataInfo}
-                      className="sm:w-auto w-16 mx-auto "
+                      src={dataInfo?.photoURL}
+                      className="sm:w-auto  mx-auto "
                       alt="Logo"
                     />
                   )}

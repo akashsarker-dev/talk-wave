@@ -8,6 +8,8 @@ export default {
     fontFamily: {
       'nunito': ['Nunito', 'sans-serif'],
       'opensans' : ['Open Sans', 'sans-serif'],
+      'poppins' : ['Poppins', 'sans-serif'],
+     
     },
     extend: {
       boxShadow: {
