@@ -13,11 +13,9 @@ const Search = () => {
             </div>
             <input
               class="font-nunito h-[60px] shadow-[box-shadow] px-10 text-base font-semibold rounded-lg  bg-transparent   border-[rgba(17,23,93,0.3)] w-full focus:outline-none peer "
-              placeholder=" "
+              placeholder=" Search"
             />
-            <label class="font-nunito absolute text-xl font-semibold text-[#11175D]   peer-focus:scale-75 peer-placeholder-shown:scale-100 scale-75 duration-300 transform -translate-y-3   px-2 peer-focus:px-2 peer-focus:text-[rgba(17,23,93,0.7)]    peer-placeholder-shown:top-1/2 peer-focus:top-0 peer-focus:-translate-y-3  left-12">
-              Search
-            </label>
+            
           </div>
         </div>
     </div>

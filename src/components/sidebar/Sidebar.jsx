@@ -15,9 +15,11 @@ import "cropperjs/dist/cropper.css";
 import Cropper from "react-cropper";
 import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
 import { data } from "autoprefixer";
+import { getDatabase, set } from "firebase/database";
 
 
 const Sidebar = () => {
+  const db = getDatabase();
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const auth = getAuth();
@@ -84,7 +86,7 @@ const Sidebar = () => {
             setCropData('')
           })
         }); 
-});
+      });
     }
   };
 
@@ -114,7 +116,7 @@ const Sidebar = () => {
               <img src={dataInfo?.photoURL} className="sm:w-auto w-16 rounded-full" alt="Logo" />
               <div
                 onClick={handleProfileUpload}
-                className="absolute w-full h-full top-0 left-0 flex justify-center items-center rounded-full opacity-0 group-hover:opacity-100 group-hover:bg-[rgba(0,0,0,0.41)]"
+                className="absolute w-full h-full top-0 left-0 cursor-pointer flex justify-center items-center rounded-full opacity-0 group-hover:opacity-100 group-hover:bg-[rgba(0,0,0,0.41)]"
                 >
                 <BiSolidCloudUpload className="text-2xl text-white"></BiSolidCloudUpload>
               </div>
