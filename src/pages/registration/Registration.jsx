@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import LoginImage from "/input-field.png";
+import RegImage from '../../assets/registration.png'
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -11,7 +11,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import ProfilePic from "../../../public/images/profile.png";
 import { getDatabase, ref, set } from "firebase/database";
 
 
@@ -100,7 +99,7 @@ const Registration = () => {
   };
   return (
     <>
-      <div className="flex">
+      <div className="lg:flex">
         <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -114,21 +113,21 @@ const Registration = () => {
           theme="light"
         />
 
-        <div className="w-1/2 mt-[100px] ml-[190px]">
-          <h2 className="text-[#11175D] text-[34px] font-bold font-nunito mb-[13px]">
+        <div className="lg:w-1/2 md:mt-[100px] mt-10 lg:ml-[190px] px-1">
+          <h2 className="text-[#11175D] text-3xl md:text-[34px] font-bold font-nunito mb-[13px] text-center lg:text-left">
             Get started with easily register
           </h2>
-          <p className="font-nunito text-[rgba(0,0,0,0.5)] text-xl font-normal mb-[62px]">
+          <p className="font-nunito text-[rgba(0,0,0,0.5)] text-xl font-normal md:mb-[62px] mb-5 text-center lg:text-left">
             Free register and you can enjoy it
           </p>
-          <div>
+          <div className="flex flex-col items-center lg:block  gap-12 lg:gap-0">
             <div class="relative">
               <input
                 onChange={handleEmail}
                 value={email}
                 type="email"
                 id="email-field"
-                className="font-nunito py-[30px] pl-[48px] text-[20px] font-semibold  border-2 rounded-lg  bg-transparent  border-1 border-[rgba(17,23,93,0.3)] w-[368px] focus:outline-none peer "
+                className="font-nunito py-[25px] sm:py-[30px] pl-[48px] text-[20px] font-semibold  border-2 rounded-lg  bg-transparent  border-1 border-[rgba(17,23,93,0.3)] sm:w-[368px] focus:outline-none peer"
                 placeholder=" "
               />
 
@@ -140,13 +139,13 @@ const Registration = () => {
               </label>
             </div>
             {emailError && <p className="text-[red]">{emailError}</p>}
-            <div class="relative mt-14">
+            <div class="relative lg:mt-14">
               <input
                 onChange={handleName}
                 value={name}
                 type="text"
                 id="full-name"
-                class="font-nunito py-[30px] pl-[48px] text-[20px] font-semibold  border-2 rounded-lg  bg-transparent  border-1 border-[rgba(17,23,93,0.3)] w-[368px] focus:outline-none peer "
+                class="font-nunito py-[25px] sm:py-[30px] pl-[48px] text-[20px] font-semibold  border-2 rounded-lg  bg-transparent  border-1 border-[rgba(17,23,93,0.3)] sm:w-[368px] focus:outline-none peer "
                 placeholder=" "
               />
 
@@ -159,19 +158,19 @@ const Registration = () => {
             </div>
             {nameError && <p className="text-[red]">{nameError}</p>}
 
-            <div class="relative mt-14">
+            <div class="relative lg:mt-14">
               <input
                 onChange={handlePassword}
                 value={password}
                 type={passwordShow ? "password" : "text"}
                 id="password"
-                class="font-nunito py-[30px] pl-[48px] text-[20px] font-semibold  border-2 rounded-lg  bg-transparent  border-1 border-[rgba(17,23,93,0.3)] w-[368px] focus:outline-none peer "
+                class="font-nunito py-[25px] sm:py-[30px] pl-[48px] text-[20px] font-semibold  border-2 rounded-lg  bg-transparent  border-1 border-[rgba(17,23,93,0.3)] sm:w-[368px] focus:outline-none peer"
                 placeholder=" "
               />
 
               <label
                 for="password"
-                class="font-nunito absolute text-[20px] font-semibold text-[#11175D]   peer-focus:scale-75 peer-placeholder-shown:scale-100 scale-75 duration-300 transform -translate-y-3 bg-white  px-2 peer-focus:px-2 peer-focus:text-[rgba(17,23,93,0.7)]    peer-placeholder-shown:top-1/2 peer-focus:top-0 peer-focus:-translate-y-3  left-12
+                class="font-nunito absolute text-[20px] font-semibold text-[#11175D]   peer-focus:scale-75 peer-placeholder-shown:scale-100 scale-75 duration-300 transform -translate-y-3 bg-white px-2 peer-focus:px-2 peer-focus:text-[rgba(17,23,93,0.7)]    peer-placeholder-shown:top-1/2 peer-focus:top-0 peer-focus:-translate-y-3  left-12
           "
               >
                 Password
@@ -181,20 +180,19 @@ const Registration = () => {
                 <AiOutlineEyeInvisible
                   for="password"
                   onClick={() => setPasswordShow(!passwordShow)}
-                  className="absolute text-xl top-10 left-[330px]"
+                  className="absolute top-9 text-xl sm:left-[330px] left-72"
                 />
               ) : (
                 <AiOutlineEye
                   onClick={() => setPasswordShow(!passwordShow)}
-                  className="absolute top-10 text-xl left-[330px]"
+                  className="absolute top-9 text-xl sm:left-[330px] left-72 "
                 />
               )}
             </div>
             {passwordError && <p className="text-[red]">{passwordError}</p>}
-          </div>
           <button
             onClick={handleSubmit}
-            className="bg-primary-color rounded-[86px] py-5 w-[368px] text-white mb-9 mt-[52px]   text-xl font-semibold nunito cursor-pointer"
+            className="bg-primary-color rounded-[86px] py-5 w-[300px] md:w-[368px] text-white lg:mb-9 lg:mt-[52px] text-xl font-semibold nunito cursor-pointer"
           >
             Sign up
           </button>
@@ -204,13 +202,14 @@ const Registration = () => {
               Sign In
             </Link>
           </p>
+          </div>
         </div>
 
-        <div className="w-1/2">
-          <div
-            className="bg-no-repeat bg-center object-cover h-full w-full"
-            style={{ backgroundImage: `url(${LoginImage})` }}
-          ></div>
+        <div className="lg:w-1/2 hidden lg:block" >
+          <img src={RegImage}
+            className="bg-no-repeat bg-center object-cover hidden lg:block h-full w-full"
+            
+          ></img>
           {/* <img className='w-full object-cover h-max bg-[url("../../Images/input-field.png")]' src={LoginImage} alt="" /> */}
         </div>
       </div>

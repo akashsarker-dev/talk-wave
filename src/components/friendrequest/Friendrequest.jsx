@@ -1,44 +1,59 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {BsThreeDotsVertical,} from 'react-icons/bs'
 import Profile from "../../assets/profileimage.png";
+import { data } from 'autoprefixer';
+import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import { useSelector } from 'react-redux';
+
 
 const Friendrequest = () => {
+  const db = getDatabase();
+  const [friendRequestList,  setfriendRequestList] = useState([]);
+  // const handleAccept = ()=>{
+  //   // set(ref(db, 'frirnd/' + userId), {
+  //   //   username: name,
+  //   //   email: email,
+  //   //   profile_picture : imageUrl
+  //   // });
+  // }
+  const data = useSelector(state => state.userLoginInfo.userInfo)
+
+  useEffect(()=>{
+    const friendrequest = ref(db, "friendrequest/");
+    onValue(friendrequest, (snapshot) => {
+      let arr =[];
+      snapshot.forEach(item=>{
+        console.log(item.val(), 'shdisfduis');
+       if(data.uid === item.val().recevierId){
+        arr.push({...item.val(), id:item.key })
+       }
+      })
+      setfriendRequestList(arr)
+    });
+  },[])
+
+
   return (
       <div className='shadow-box-shadow rounded-[20px] p-5 h-[330px] w-[427px] '>
       <div className='flex justify-between items-center mb-4'>
         <h3 className='text-xl font-semibold text-black'>Friend  Request</h3>
         <BsThreeDotsVertical className='text-primary-color'></BsThreeDotsVertical>
       </div>
-      <div className='flex border-b-2 border-[rgba(0,0,0,0.25)] py-4'>
+      {
+        friendRequestList.map((item)=>(
+          <div className='flex border-b-2 border-[rgba(0,0,0,0.25)] py-4'>
         <div className='flex'>
           <img src={Profile} alt="" />
          <div className='ml-[14px] mr-12'>
-         <h2 className='font-semibold text-lg text-black'>Hi Guys, Wassup!</h2>
+         <h2 className='font-semibold text-lg text-black'>{item.senderName}</h2>
           <p className='text-[rgb(77,77,77,0.75)]'>Dinner?</p>
          </div>
         </div>
-        <button className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>Accept</button>
+        <button onClick={()=> handleAccept(item)} className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>Accept</button>
       </div>
-      <div className='flex border-b-2 border-[rgba(0,0,0,0.25)] py-4'>
-        <div className='flex'>
-          <img src={Profile} alt="" />
-         <div className='ml-[14px] mr-12'>
-         <h2 className='font-semibold text-lg text-black'>Hi Guys, Wassup!</h2>
-          <p className='text-[rgb(77,77,77,0.75)]'>Dinner?</p>
-         </div>
-        </div>
-        <button className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>Accept</button>
-      </div>
-      <div className='flex border-b-2 border-[rgba(0,0,0,0.25)] py-4'>
-        <div className='flex'>
-          <img src={Profile} alt="" />
-         <div className='ml-[14px] mr-12'>
-         <h2 className='font-semibold text-lg text-black'>Hi Guys, Wassup!</h2>
-          <p className='text-[rgb(77,77,77,0.75)]'>Dinner?</p>
-         </div>
-        </div>
-        <button className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>Accept</button>
-      </div>
+        ))
+      }
+      
     </div>
   )
 }

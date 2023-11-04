@@ -28,7 +28,7 @@ const Sidebar = () => {
   // .userLoginInfo.userInfo.photoURL
   const storage = getStorage();
   const dataInfo = useSelector(state => state.userLoginInfo.userInfo);
-  console.log(dataInfo,'data');
+ 
 
   const [image, setImage] = useState("");
   const [cropData, setCropData] = useState("");
@@ -43,7 +43,6 @@ const Sidebar = () => {
  
 
   const handleSingout = () => {
-    console.log("jsjdsd");
     signOut(auth)
       .then(() => {
         dispatch(userLoginInfo(null));

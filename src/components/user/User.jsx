@@ -6,10 +6,11 @@ import { data } from 'autoprefixer';
 import { useSelector } from 'react-redux';
 
 const User = () => {
-  const [userData,  setUserData] = useState([])
+  const [userData,  setUserData] = useState([]);
+  const [friendRequestData,  setfriendRequestData] = useState([]);
   const db = getDatabase();
   const data = useSelector(state => state.userLoginInfo.userInfo)
-  console.log(data);
+
   useEffect(()=>{
     const userLists = ref(db, "users/");
     onValue(userLists, (snapshot) => {
@@ -22,14 +23,25 @@ const User = () => {
       setUserData(arr)
     });
   },[])
-// const handleRequest = ()=>{
-//   set(push(ref(db, 'friendrequest/')),{
-//     sendername : data.displayName,
-//     senderid : data.uid,
-//     receivername : item.username,
-//     receiverid : item.userid,
-//   });
-// }
+  const handleRequest =(item)=>{
+    console.log();
+    set(push(ref(db, "friendrequest/")), {
+      senderName: data.displayName,
+      senderId: data.uid,
+      recevierName: item.username,
+      recevierId: item.userId,
+    });
+}
+  useEffect(()=>{
+    const friendrequest = ref(db, "friendrequest/");
+    onValue(friendrequest, (snapshot) => {
+      let arr =[];
+      snapshot.forEach(item=>{
+        arr.push(item.val().recevierId+item.val().senderId);
+      })
+      setfriendRequestData(arr)
+    });
+  },[])
 
   return (
       <div className='shadow-box-shadow rounded-[20px] p-5 h-[390px] w-[427px] '>
@@ -48,8 +60,15 @@ const User = () => {
           <p className='text-[rgb(77,77,77,0.75)]'>Today, 8:56pm</p>
          </div>
         </div>
-        <button onClick={()=> handleRequest(item)} className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>+</button>
-      </div>
+            {
+              friendRequestData.includes(item.userId+data.uid) || friendRequestData.includes(data.uid+item.userId) ?
+              <button className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>-</button>
+              :
+              <button onClick={()=> handleRequest(item)} className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>+</button>
+            }
+          </div>
+
+
           ))
         }
 
