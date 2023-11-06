@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 const User = () => {
   const [userData,  setUserData] = useState([]);
   const [friendRequestData,  setfriendRequestData] = useState([]);
+  const [friendList,  setfriendList] = useState([]);
   const db = getDatabase();
   const data = useSelector(state => state.userLoginInfo.userInfo)
 
@@ -41,6 +42,17 @@ const User = () => {
       })
       setfriendRequestData(arr)
     });
+  },[]) 
+  
+  useEffect(()=>{
+    const friend = ref(db, "friend/");
+    onValue(friend, (snapshot) => {
+      let arr =[];
+      snapshot.forEach(item=>{
+        arr.push(item.val().recevierId+item.val().senderId);
+      })
+      setfriendList(arr)
+    });
   },[])
 
   return (
@@ -60,12 +72,16 @@ const User = () => {
           <p className='text-[rgb(77,77,77,0.75)]'>Today, 8:56pm</p>
          </div>
         </div>
-            {
-              friendRequestData.includes(item.userId+data.uid) || friendRequestData.includes(data.uid+item.userId) ?
+        {
+          friendList.includes(item.userId+data.uid) || friendList.includes(data.uid+item.userId)?
+          <button  className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>friend</button>
+          :
+          friendRequestData.includes(item.userId+data.uid) || friendRequestData.includes(data.uid+item.userId) ?
               <button className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>-</button>
               :
               <button onClick={()=> handleRequest(item)} className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>+</button>
-            }
+        }
+            
           </div>
 
 

@@ -2,20 +2,14 @@ import React, { useEffect, useState } from 'react'
 import {BsThreeDotsVertical,} from 'react-icons/bs'
 import Profile from "../../assets/profileimage.png";
 import { data } from 'autoprefixer';
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
 import { useSelector } from 'react-redux';
 
 
 const Friendrequest = () => {
   const db = getDatabase();
   const [friendRequestList,  setfriendRequestList] = useState([]);
-  // const handleAccept = ()=>{
-  //   // set(ref(db, 'frirnd/' + userId), {
-  //   //   username: name,
-  //   //   email: email,
-  //   //   profile_picture : imageUrl
-  //   // });
-  // }
+
   const data = useSelector(state => state.userLoginInfo.userInfo)
 
   useEffect(()=>{
@@ -23,7 +17,6 @@ const Friendrequest = () => {
     onValue(friendrequest, (snapshot) => {
       let arr =[];
       snapshot.forEach(item=>{
-        console.log(item.val(), 'shdisfduis');
        if(data.uid === item.val().recevierId){
         arr.push({...item.val(), id:item.key })
        }
@@ -31,7 +24,13 @@ const Friendrequest = () => {
       setfriendRequestList(arr)
     });
   },[])
-
+  const handleAccept = (item)=>{
+    set(push(ref(db, 'friend/')), {
+      ...item
+    }).then(()=>{
+      remove((ref(db, 'friendrequest/' + item.id)))
+    })
+  }
 
   return (
       <div className='shadow-box-shadow rounded-[20px] p-5 h-[330px] w-[427px] '>
