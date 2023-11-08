@@ -9,6 +9,8 @@ const User = () => {
   const [userData,  setUserData] = useState([]);
   const [friendRequestData,  setfriendRequestData] = useState([]);
   const [friendList,  setfriendList] = useState([]);
+  const [blockList,  setblockList] = useState([]);
+
   const db = getDatabase();
   const data = useSelector(state => state.userLoginInfo.userInfo)
 
@@ -53,7 +55,21 @@ const User = () => {
       })
       setfriendList(arr)
     });
-  },[])
+  },[])  
+
+
+   useEffect(()=>{
+    const blockRef = ref(db, "block/");
+    onValue(blockRef, (snapshot) => {
+      let arr =[];
+      snapshot.forEach(item=>{
+        console.log(item, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        arr.push(item.val().blockId+item.val().blockById);
+      })
+      setblockList(arr)
+    });
+  },[]) 
+  
 
   return (
       <div className='shadow-box-shadow rounded-[20px] p-5 h-[390px] w-[427px] '>
@@ -76,6 +92,10 @@ const User = () => {
           friendList.includes(item.userId+data.uid) || friendList.includes(data.uid+item.userId)?
           <button  className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>friend</button>
           :
+          blockList.includes(item.userId+data.uid) || blockList.includes(data.uid+item.userId)?
+          <button  className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>block</button>
+          :
+          
           friendRequestData.includes(item.userId+data.uid) || friendRequestData.includes(data.uid+item.userId) ?
               <button className='bg-primary-color px-[22px] py-0 block text-xl font-semibold text-white rounded-md'>-</button>
               :

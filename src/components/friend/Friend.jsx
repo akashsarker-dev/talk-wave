@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {BsThreeDotsVertical,} from 'react-icons/bs'
 import Profile from "../../assets/profileimage.png";
-import { getDatabase, onValue, ref } from 'firebase/database';
+import { getDatabase, onValue, push, ref, remove, set } from 'firebase/database';
 import { useSelector } from 'react-redux';
 
 
@@ -10,6 +10,33 @@ const Friend = () => {
   const data = useSelector(state => state.userLoginInfo.userInfo)
 
   const [friend , setFriend] = useState([])
+  const db = getDatabase();
+
+  const handleBlock = (item)=>{
+    if (data.uid == item.senderId){
+
+      set(push(ref(db, 'block/')), {
+          blockId : item.recevierId,
+          block : item.recevierName,
+          blockById : item.senderId,
+          blockBy : item.senderName,
+      }).then(()=>{
+        remove((ref(db, 'friend/' + item.key)))
+      })
+      
+    }else{
+      set(push(ref(db, 'block/')), {
+        blockId : item.senderId,
+        block : item.senderName,
+        blockById : item.recevierId,
+        blockBy : item.recevierName,
+
+    }).then(()=>{
+      remove((ref(db, 'friend/' + item.key)))
+    })
+    }
+
+  }
 
   useEffect(()=>{
     const db = getDatabase();
@@ -17,7 +44,6 @@ const Friend = () => {
     onValue(friendRef, (snapshot) => {
       let arr =[];
       snapshot.forEach(item=>{
-        console.log(item.val(), 'fffffffff');
         if(data.uid == item.val().senderId
         || data.uid ==  item.val().recevierId){
 
@@ -27,7 +53,9 @@ const Friend = () => {
       setFriend(arr)
     });
   },[])
-  console.log(friend, 'frrrrrrr');
+
+
+ 
   return (
       <div className='shadow-box-shadow rounded-[20px] p-5 h-[390px] w-[427px] '>
       <div className='flex justify-between items-center mb-4'>
@@ -37,8 +65,8 @@ const Friend = () => {
       {
         friend.map((item)=>(
 
-      <div className='flex border-b-2 border-[rgba(0,0,0,0.25)] items-center py-4'>
-        <div className='flex'>
+      <div className='flex justify-around border-b-2 border-[rgba(0,0,0,0.25)] items-center py-4'>
+        <div className='flex '>
           <img src={Profile} alt="" />
          <div className='ml-[14px] mr-12'>
          <h2 className='font-semibold text-lg text-black'>
@@ -53,7 +81,7 @@ const Friend = () => {
           <p className='text-[rgb(77,77,77,0.75)]'>Dinner?</p>
          </div>
         </div>
-        <p className='text-xs text-[rgba(0,0,0,0.5)]'>Today, 8:56pm</p>
+        <button onClick={()=> handleBlock(item)} className='bg-primary-color px-[22px] py-3 block text-xl font-semibold text-white rounded-md'>Block</button>
       </div>
         ))
       }
