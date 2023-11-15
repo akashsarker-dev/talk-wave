@@ -109,7 +109,7 @@ const Sidebar = () => {
           open ? "transition-transform -translate-x-full " : "translate-x-0"
         } fixed  top-0 left-0 z-40 h-screen sm:translate-x-0`}
       >
-        <div class="h-full px-3 py-4 overflow-y-auto w-[186px] bg-primary-color">
+        <div class="h-full overflow-y-auto w-[186px] bg-primary-color">
           <div class="flex items-center justify-between sm:justify-center">
             <div className="relative group">
               <img src={dataInfo?.photoURL} className="sm:w-auto w-16 rounded-full" alt="Logo" />
@@ -126,9 +126,10 @@ const Sidebar = () => {
             ></FaXmark>
           </div>
           <h3 className="text-center text-[rgba(255,255,255,0.7)] text-2xl font-bold font-nunito">{dataInfo?.displayName}</h3>
+
           <ul class="flex flex-col text-5xl mt-[98px] cursor-pointer text-[rgba(255,255,255,0.7)] items-center gap-20">
-            <li>
-              <AiOutlineHome></AiOutlineHome>
+            <li className=" bg-white  w-[160px] rounded-l-lg h-20 flex justify-center items-center relative after:absolute after:h-full after:w-3 after:top-0 after:right-0 after:bg-primary-color shadow-lg shadow-purple-500 after:rounded-s-lg">
+              <AiOutlineHome className="text-primary-color"></AiOutlineHome>
             </li>
             <li>
               <AiFillMessage></AiFillMessage>
@@ -144,7 +145,7 @@ const Sidebar = () => {
             </li>
           </ul>
           {profileUploadModal && (
-            <div className="absolute top-0 left-0 bg-[#0000006b] h-full w-screen flex justify-center items-center">
+            <div onClick={handleCropCancle} className="absolute top-0 left-0 bg-[#0000006b] h-full w-screen flex justify-center items-center">
               <div className=" bg-primary-color w-1/2 p-10 rounded-md">
                 <h2 className="text-center text-[34px] font-bold font-opensans text-white">
                   Upload You Image

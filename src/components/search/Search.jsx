@@ -15,7 +15,6 @@ const Search = () => {
               class="font-nunito h-[60px] shadow-[box-shadow] px-10 text-base font-semibold rounded-lg  bg-transparent   border-[rgba(17,23,93,0.3)] w-full focus:outline-none peer "
               placeholder=" Search"
             />
-            
           </div>
         </div>
     </div>

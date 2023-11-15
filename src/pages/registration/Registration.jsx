@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import React, { useState } from "react";
 import RegImage from '../../assets/registration.png'
 import {
@@ -113,11 +113,11 @@ const Registration = () => {
           theme="light"
         />
 
-        <div className="lg:w-1/2 md:mt-[100px] mt-10 lg:ml-[190px] px-1">
+        <div className="lg:w-1/2  mt-10 lg:ml-[190px] px-1">
           <h2 className="text-[#11175D] text-3xl md:text-[34px] font-bold font-nunito mb-[13px] text-center lg:text-left">
             Get started with easily register
           </h2>
-          <p className="font-nunito text-[rgba(0,0,0,0.5)] text-xl font-normal md:mb-[62px] mb-5 text-center lg:text-left">
+          <p className="font-nunito text-[rgba(0,0,0,0.5)] text-xl font-normal md:mb-10 mb-5 text-center lg:text-left">
             Free register and you can enjoy it
           </p>
           <div className="flex flex-col items-center lg:block  gap-12 lg:gap-0">
@@ -139,7 +139,7 @@ const Registration = () => {
               </label>
             </div>
             {emailError && <p className="text-[red]">{emailError}</p>}
-            <div class="relative lg:mt-14">
+            <div class="relative lg:mt-8">
               <input
                 onChange={handleName}
                 value={name}
@@ -158,7 +158,7 @@ const Registration = () => {
             </div>
             {nameError && <p className="text-[red]">{nameError}</p>}
 
-            <div class="relative lg:mt-14">
+            <div class="relative lg:mt-8">
               <input
                 onChange={handlePassword}
                 value={password}
@@ -192,7 +192,7 @@ const Registration = () => {
             {passwordError && <p className="text-[red]">{passwordError}</p>}
           <button
             onClick={handleSubmit}
-            className="bg-primary-color rounded-[86px] py-5 w-[300px] md:w-[368px] text-white lg:mb-9 lg:mt-[52px] text-xl font-semibold nunito cursor-pointer"
+            className="bg-primary-color rounded-[86px] py-5 w-[300px] md:w-[368px] text-white my-6 text-xl font-semibold nunito cursor-pointer"
           >
             Sign up
           </button>
@@ -207,10 +207,10 @@ const Registration = () => {
 
         <div className="lg:w-1/2 hidden lg:block" >
           <img src={RegImage}
-            className="bg-no-repeat bg-center object-cover hidden lg:block h-full w-full"
+            className="bg-no-repeat bg-center object-cover hidden lg:block h-screen w-full"
             
           ></img>
-          {/* <img className='w-full object-cover h-max bg-[url("../../Images/input-field.png")]' src={LoginImage} alt="" /> */}
+          
         </div>
       </div>
     </>

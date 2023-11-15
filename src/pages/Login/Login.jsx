@@ -50,6 +50,7 @@ const Login = () => {
   });
 
   }
+  
   const handleSubmit = ()=>{
     if(!email){
       setEmailError('Please Enter You Email Address');
@@ -78,7 +79,7 @@ const Login = () => {
   }
   return (
     <>
-    <div className='flex'>
+    <div className='lg:flex '>
     <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -91,7 +92,7 @@ const Login = () => {
           pauseOnHover
           theme="light"
           />
-      <div className='w-1/2 mt-[100px] ml-[147px]'>
+      <div className='lg:w-1/2 mt-[100px] flex flex-col items-center lg:block lg:ml-[147px]'>
         <h2 className='text-[#11175D] text-[34px] font-bold font-opensans mb-7'>Login to your account!</h2>
         <button onClick={handleGoogle} className='font-opensans text-[#03014C] text-sm font-semibold mb-8 flex items-center py-[23px] pl-[29px] pr-[42px] border-[1px] border-[rgba(3,1,76,0.32)] rounded-lg'><FcGoogle className='mr-[9px]'></FcGoogle>Login with Google</button>
         <div>
@@ -130,7 +131,7 @@ const Login = () => {
         
       </div>
 
-      <div className='w-1/2'>
+      <div className='lg:w-1/2 hidden lg:block'>
         <img src={LoginImage} className=' object-cover h-screen  w-full' />
       </div>
     </div>

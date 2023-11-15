@@ -32,6 +32,9 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home></Home>,
   },
+  {
+    path: "/message",
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
