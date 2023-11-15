@@ -14,6 +14,7 @@ import Resetpassword from './pages/resetPassword/Resetpassword.jsx'
 import Home from './pages/home/Home.jsx'
 import { store } from './store'
 import { Provider } from 'react-redux'
+import Message from './components/message/Message.jsx'
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/message",
+    element: <Message></Message>
   },
 ]);
 

@@ -8,7 +8,7 @@ import { AiOutlineHome, AiFillMessage, AiOutlineSetting } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import { BiSolidCloudUpload } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoginInfo } from "../../slices/userSlice";
 import "cropperjs/dist/cropper.css";
@@ -18,7 +18,7 @@ import { data } from "autoprefixer";
 import { getDatabase, set } from "firebase/database";
 
 
-const Sidebar = () => {
+const Sidebar = ({active}) => {
   const db = getDatabase();
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
@@ -128,12 +128,20 @@ const Sidebar = () => {
           <h3 className="text-center text-[rgba(255,255,255,0.7)] text-2xl font-bold font-nunito">{dataInfo?.displayName}</h3>
 
           <ul class="flex flex-col text-5xl mt-[98px] cursor-pointer text-[rgba(255,255,255,0.7)] items-center gap-20">
-            <li className=" bg-white  w-[160px] rounded-l-lg h-20 flex justify-center items-center relative after:absolute after:h-full after:w-3 after:top-0 after:right-0 after:bg-primary-color shadow-lg shadow-purple-500 after:rounded-s-lg">
-              <AiOutlineHome className="text-primary-color"></AiOutlineHome>
-            </li>
-            <li>
-              <AiFillMessage></AiFillMessage>
-            </li>
+
+            <Link to='/' className={`w-[160px] flex justify-center h-20 items-center ${active == 'home' ? 'bg-white   rounded-l-lg  relative after:absolute  after:h-full after:w-3 after:top-0 after:right-0 after:bg-primary-color shadow-lg shadow-purple-500 after:rounded-s-lg' : 'text-blue-500'}`}>
+
+              <AiOutlineHome className={`${active == 'home' ? 'text-primary-color' :
+            'text-white'}`}></AiOutlineHome>
+            </Link>
+
+
+            <Link to='/message' className={`w-[160px] flex justify-center h-20 items-center ${active == 'message' ? 'bg-white   rounded-l-lg  relative after:absolute  after:h-full after:w-3 after:top-0 after:right-0 after:bg-primary-color shadow-lg shadow-purple-500 after:rounded-s-lg' : 'text-blue-500'}`}>
+
+
+              <AiFillMessage className={`${active == 'message' ? 'text-primary-color' :
+            'text-white'}`}></AiFillMessage>
+            </Link>
             <li>
               <IoIosNotifications></IoIosNotifications>
             </li>

@@ -89,10 +89,10 @@ const User = () => {
   }
 
   return (
-      <div className='shadow-box-shadow rounded-[20px] p-5 h-[390px] w-[427px]  overflow-scroll '>
+      <div className='shadow-box-shadow rounded-[20px] p-5 h-[390px] w-[427px]   overflow-scroll '>
 
         <div class="shadow-box-shadow rounded-[20px]">
-          <div class="relative  w-full ">
+          <div class="relative  w-full">
             <div class="absolute top-2/4 right-3 grid w-5 -translate-y-2/4 place-items-center text-blue-gray-500 text-primary-color">
               <BsThreeDotsVertical></BsThreeDotsVertical>
             </div>

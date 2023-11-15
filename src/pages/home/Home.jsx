@@ -35,10 +35,10 @@ const Home = () => {
   return (
     <div className='flex'>
       
-     <div><Sidebar></Sidebar></div>
+     <div><Sidebar active='home'></Sidebar></div>
      <div className='flex flex-wrap sm:ml-[186px] mt-2 gap-x-3'>
      <div>
-      <Search></Search>
+      <Search ></Search>
       <Group></Group>
      </div>
       <div><Friend></Friend></div>
