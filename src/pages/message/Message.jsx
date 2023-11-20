@@ -2,10 +2,11 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../sidebar/Sidebar';
-import Search from '../search/Search';
-import Group from '../group/Group';
-import Friend from '../friend/Friend';
+import Sidebar from '../../components/sidebar/Sidebar';
+import Search from '../../components/search/Search';
+import Group from '../../components/group/Group';
+import Friend from '../../components/friend/Friend';
+import ChatBox from '../../components/chatBox/ChatBox';
 
 const Message = () => {
   const navigate = useNavigate();
@@ -31,9 +32,12 @@ const Message = () => {
       <div className='flex'>
       
       <div><Sidebar active='message'></Sidebar></div>
-      <div className='flex flex-wrap sm:ml-[186px] mt-2 gap-x-3'>
+      <div className='flex  sm:ml-[186px] mt-2 gap-x-3 '>
       <div>
        <Friend></Friend>
+      </div>
+      <div className='h-screen'>
+        <ChatBox></ChatBox>
       </div>
       </div>
      </div>

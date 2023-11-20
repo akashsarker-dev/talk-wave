@@ -104,13 +104,11 @@ const Sidebar = ({active}) => {
         </svg>
       </button>
 
-      <sidebar
-        class={`${
+      <sidebar className={`${
           open ? "transition-transform -translate-x-full " : "translate-x-0"
-        } fixed  top-0 left-0 z-40 h-screen sm:translate-x-0`}
-      >
-        <div class="h-full overflow-y-auto w-[186px] bg-primary-color">
-          <div class="flex items-center justify-between sm:justify-center">
+        } fixed  top-0 left-0 z-40 h-screen sm:translate-x-0`}>
+        <div className="h-full overflow-y-auto w-[186px] bg-primary-color">
+          <div className="flex items-center justify-between sm:justify-center">
             <div className="relative group">
               <img src={dataInfo?.photoURL} className="sm:w-auto w-16 rounded-full" alt="Logo" />
               <div
