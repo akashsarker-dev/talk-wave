@@ -13,22 +13,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLoginInfo } from "../../slices/userSlice";
 import "cropperjs/dist/cropper.css";
 import Cropper from "react-cropper";
-import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadString,
+} from "firebase/storage";
 import { data } from "autoprefixer";
 import { getDatabase, set } from "firebase/database";
 
-
-const Sidebar = ({active}) => {
+const Sidebar = ({ active }) => {
   const db = getDatabase();
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const auth = getAuth();
   const dispatch = useDispatch();
   const [profileUploadModal, setprofileUploadModal] = useState(false);
-  // .userLoginInfo.userInfo.photoURL
   const storage = getStorage();
-  const dataInfo = useSelector(state => state.userLoginInfo.userInfo);
- 
+  const dataInfo = useSelector((state) => state.userLoginInfo.userInfo);
 
   const [image, setImage] = useState("");
   const [cropData, setCropData] = useState("");
@@ -40,8 +42,6 @@ const Sidebar = ({active}) => {
   const handleCropCancle = () => {
     setprofileUploadModal(false);
   };
- 
-
   const handleSingout = () => {
     signOut(auth)
       .then(() => {
@@ -71,20 +71,22 @@ const Sidebar = ({active}) => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
       setCropData(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
       const storageRef = ref(storage, auth.currentUser.uid);
-     
-      const message4 = cropperRef.current?.cropper.getCroppedCanvas().toDataURL();
-      uploadString(storageRef, message4, 'data_url').then((snapshot) => {
-        console.log('Uploaded a data_url string!');
+
+      const message4 = cropperRef.current?.cropper
+        .getCroppedCanvas()
+        .toDataURL();
+      uploadString(storageRef, message4, "data_url").then((snapshot) => {
+        console.log("Uploaded a data_url string!");
         getDownloadURL(storageRef).then((downloadURL) => {
-          console.log('File available at', downloadURL);
-          updateProfile(auth.currentUser,{
-            photoURL : downloadURL
-          }).then(()=>{
-            setprofileUploadModal(false)
-            setImage('')
-            setCropData('')
-          })
-        }); 
+          console.log("File available at", downloadURL);
+          updateProfile(auth.currentUser, {
+            photoURL: downloadURL,
+          }).then(() => {
+            setprofileUploadModal(false);
+            setImage("");
+            setCropData("");
+          });
+        });
       });
     }
   };
@@ -104,17 +106,23 @@ const Sidebar = ({active}) => {
         </svg>
       </button>
 
-      <sidebar className={`${
+      <sidebar
+        class={`${
           open ? "transition-transform -translate-x-full " : "translate-x-0"
-        } fixed  top-0 left-0 z-40 h-screen sm:translate-x-0`}>
-        <div className="h-full overflow-y-auto w-[186px] bg-primary-color">
-          <div className="flex items-center justify-between sm:justify-center">
+        } fixed  top-0 left-0 z-40 h-screen sm:translate-x-0`}
+      >
+        <div class="h-full px-3 py-4 overflow-y-auto w-[186px] bg-primary-color">
+          <div class="flex items-center justify-between sm:justify-center">
             <div className="relative group">
-              <img src={dataInfo?.photoURL} className="sm:w-auto w-16 rounded-full" alt="Logo" />
+              <img
+                src={dataInfo?.photoURL}
+                className="sm:w-auto w-16 rounded-full"
+                alt="Logo"
+              />
               <div
                 onClick={handleProfileUpload}
                 className="absolute w-full h-full top-0 left-0 cursor-pointer flex justify-center items-center rounded-full opacity-0 group-hover:opacity-100 group-hover:bg-[rgba(0,0,0,0.41)]"
-                >
+              >
                 <BiSolidCloudUpload className="text-2xl text-white"></BiSolidCloudUpload>
               </div>
             </div>
@@ -123,23 +131,39 @@ const Sidebar = ({active}) => {
               class="w-5 h-5  pointer sm:hidden block"
             ></FaXmark>
           </div>
-          <h3 className="text-center text-[rgba(255,255,255,0.7)] text-2xl font-bold font-nunito">{dataInfo?.displayName}</h3>
-
+          <h3 className="text-center text-[rgba(255,255,255,0.7)] text-2xl font-bold font-nunito">
+            {dataInfo?.displayName}
+          </h3>
           <ul class="flex flex-col text-5xl mt-[98px] cursor-pointer text-[rgba(255,255,255,0.7)] items-center gap-20">
-
-            <Link to='/' className={`w-[160px] flex justify-center h-20 items-center ${active == 'home' ? 'bg-white   rounded-l-lg  relative after:absolute  after:h-full after:w-3 after:top-0 after:right-0 after:bg-primary-color shadow-lg shadow-purple-500 after:rounded-s-lg' : 'text-blue-500'}`}>
-
-              <AiOutlineHome className={`${active == 'home' ? 'text-primary-color' :
-            'text-white'}`}></AiOutlineHome>
+            <Link
+              to="/"
+              className={`w-[160px] flex justify-center h-20 items-center ${
+                active == "home"
+                  ? "bg-white rounded-l-lg relative after:absolute after:h-full after:w-3 after:top-0 after:right-0 after:bg-primary-color shadow-lg shadow-purple-500 after:rounded-s-lg"
+                  : "text-blue-500"
+              }`}
+            >
+              <AiOutlineHome
+                className={`${
+                  active == "home" ? "text-primary-color" : "text-white"
+                }`}
+              ></AiOutlineHome>
+            </Link>
+            <Link
+              to="/message"
+              className={`w-[160px] flex justify-center h-20 items-center ${
+                active == "message"
+                  ? "bg-white   rounded-l-lg  relative after:absolute  after:h-full after:w-3 after:top-0 after:right-0 after:bg-primary-color shadow-lg shadow-purple-500 after:rounded-s-lg"
+                  : "text-blue-500"
+              }`}
+            >
+              <AiFillMessage
+                className={`${
+                  active == "message" ? "text-primary-color" : "text-white"
+                }`}
+              ></AiFillMessage>
             </Link>
 
-
-            <Link to='/message' className={`w-[160px] flex justify-center h-20 items-center ${active == 'message' ? 'bg-white   rounded-l-lg  relative after:absolute  after:h-full after:w-3 after:top-0 after:right-0 after:bg-primary-color shadow-lg shadow-purple-500 after:rounded-s-lg' : 'text-blue-500'}`}>
-
-
-              <AiFillMessage className={`${active == 'message' ? 'text-primary-color' :
-            'text-white'}`}></AiFillMessage>
-            </Link>
             <li>
               <IoIosNotifications></IoIosNotifications>
             </li>
@@ -151,7 +175,7 @@ const Sidebar = ({active}) => {
             </li>
           </ul>
           {profileUploadModal && (
-            <div onClick={handleCropCancle} className="absolute top-0 left-0 bg-[#0000006b] h-full w-screen flex justify-center items-center">
+            <div className="absolute top-0 left-0 bg-[#0000006b] h-full w-screen flex justify-center items-center">
               <div className=" bg-primary-color w-1/2 p-10 rounded-md">
                 <h2 className="text-center text-[34px] font-bold font-opensans text-white">
                   Upload You Image
@@ -194,7 +218,10 @@ const Sidebar = ({active}) => {
                   />
                 )}
                 <div>
-                  <button onClick={getCropData} className="bg-sky-500 rounded-lg p-4 text-white  mt-14   text-xl font-semibold nunito cursor-pointer">
+                  <button
+                    onClick={getCropData}
+                    className="bg-sky-500 rounded-lg p-4 text-white  mt-14   text-xl font-semibold nunito cursor-pointer"
+                  >
                     Upload
                   </button>
 

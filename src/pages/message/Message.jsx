@@ -1,10 +1,8 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/sidebar/Sidebar';
-import Search from '../../components/search/Search';
-import Group from '../../components/group/Group';
 import Friend from '../../components/friend/Friend';
 import ChatBox from '../../components/chatBox/ChatBox';
 
@@ -12,6 +10,8 @@ const Message = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const [verify, setVerify] = useState(true);
   const data = useSelector(state => state.userLoginInfo.userInfo);
 
   useEffect(() => {

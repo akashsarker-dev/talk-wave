@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import {BsThreeDotsVertical,} from 'react-icons/bs'
 import Profile from "../../assets/profileimage.png";
 import { getDatabase, onValue, push, ref, remove, set } from 'firebase/database';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { activeChat } from '../../slices/activeSlice';
 
 
 const Friend = () => {
 
   const data = useSelector(state => state.userLoginInfo.userInfo)
-
+  const dispatch = useDispatch(); 
   const [friend , setFriend] = useState([])
   const db = getDatabase();
 
@@ -54,6 +55,15 @@ const Friend = () => {
     });
   },[])
 
+  const handleMessage = (item)=>{
+    if(item.recevierId == data.uid){
+      dispatch(activeChat({status :'single' ,id:item.senderId , name:item.senderName}))
+    }else{
+      dispatch(activeChat({status :'single' ,id:item.recevierId , name:item.recevierName}));
+    }
+
+  }
+  
 
  
   return (
@@ -65,7 +75,7 @@ const Friend = () => {
       {
         friend.map((item)=>(
 
-      <div className='flex justify-around border-b-2 border-[rgba(0,0,0,0.25)] items-center py-4'>
+      <div onClick={()=> handleMessage(item)} className='flex justify-around border-b-2 border-[rgba(0,0,0,0.25)] items-center py-4'>
         <div className='flex '>
           <img src={Profile} alt="" />
          <div className='ml-[14px] mr-12'>
@@ -73,10 +83,6 @@ const Friend = () => {
 
          {data.uid == item.senderId ? item.recevierName : item.senderName}
          
-         {/* {
-          item.senderId ? item.recevierName : item.senderName
-         } */}
-          
           </h2>
           <p className='text-[rgb(77,77,77,0.75)]'>Dinner?</p>
          </div>
